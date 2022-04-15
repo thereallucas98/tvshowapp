@@ -1,0 +1,10 @@
+{
+  "expo": {
+    "name": "tvshowapp",
+    "slug": "tvshowapp",
+    "version": "1.0.0",
+    "assetBundlePatterns": [
+      "**/*"
+    ]
+  }
+}
