@@ -17,10 +17,50 @@ const ImageBackgroundContent = styled.Image`
   border-radius: 4px;
 `;
 
-const Title = styled.Text``;
+const InfoContent = styled.View`
+  display: flex;
+  align-items: center;
+  justify-content: center;
 
-const Genre = styled.Text``;
+  padding: 6px;
+`;
 
-const Duration = styled.Text``;
+const Title = styled.Text`
+  font-size: ${RFValue(14)}px;
+  color: #ffff;
+`;
 
-export { Container, ImageBackgroundContent, Title, Genre, Duration };
+const Genre = styled.View`
+  height: 32px;
+  min-width: 60px;
+
+  padding: 6px;
+  margin-right: 6px;
+
+  background-color: ${({ theme }) => theme.colors.secondary};
+  border-radius: 4px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+`;
+
+const GenreLabel = styled.Text`
+  font-size: ${RFValue(12)}px;
+  color: ${({ theme }) => theme.colors.shape};
+`;
+
+const Duration = styled.Text`
+  font-size: ${RFValue(14)}px;
+  color: ${({ theme }) => theme.colors.shape};
+`;
+
+export {
+  Container,
+  ImageBackgroundContent,
+  InfoContent,
+  Title,
+  Genre,
+  GenreLabel,
+  Duration,
+};

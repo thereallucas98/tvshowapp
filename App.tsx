@@ -1,4 +1,5 @@
 import React from 'react';
+import { StatusBar } from 'react-native';
 import AppLoading from 'expo-app-loading';
 import { ThemeProvider } from 'styled-components';
 
@@ -11,9 +12,8 @@ import {
 
 import theme from './src/global/styles/theme';
 import Dashboard from './src/screens/Dashboard';
-import { StatusBar } from 'react-native';
 
-export default function App() {
+function App() {
   const [fontsLoaded] = useFonts({
     Roboto_400Regular,
     Roboto_500Medium,
@@ -35,3 +35,6 @@ export default function App() {
     </ThemeProvider>
   );
 }
+
+
+export default App;

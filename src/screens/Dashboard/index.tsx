@@ -1,23 +1,38 @@
 import React, { useEffect, useState } from 'react';
-import { View } from 'react-native';
+import { FlatList, View, Text, TouchableOpacity } from 'react-native';
 import CardTvShowItem from '../../components/CardTVShowItem';
 import { Header } from '../../components/Header';
 import SearchInput from '../../components/SearchInput';
 import { TVShowsDataResponse } from '../../global/interfaces/tvshowdata';
 import api from '../../services/api';
 
-import { Container, MainList } from './styles';
+import {
+  Container,
+  Footer,
+  AmountOfTvShows,
+  PaginationContent,
+  PaginationButton,
+  PaginationLabel,
+} from './styles';
 
-export default function Dashboard() {
+function Dashboard() {
   const [currentPage, setCurrentPage] = useState(1);
+  const [hasNext, setHasNext] = useState(true);
   const [searchValue, setSearchValue] = useState("");
   const [tvShows, setTvShows] = useState<TVShowsDataResponse[]>([]);
 
   useEffect(() => {
     const fetchData = async () => {
       const results = await api.get<TVShowsDataResponse[]>(`shows?page=${currentPage}`);
+      setTvShows(results.data);
 
-      console.log("results", results);
+      fetchHasNextData();
+    }
+
+    const fetchHasNextData = async () => {
+      const hasNextResults = await api.get<TVShowsDataResponse[]>(`shows?page=${currentPage + 1}`);
+
+      setHasNext(!!hasNextResults);
     }
 
     fetchData();
@@ -28,17 +43,32 @@ export default function Dashboard() {
       <Header />
       <SearchInput />
 
-      <CardTvShowItem />
-
-      {/* <MainList 
+      <FlatList
         data={tvShows}
-        keyExtractor={item => item.id}
+        keyExtractor={item => String(item.id)}
         renderItem={({ item }) => (
-          <View>
-            <Text>{item}</Text>
-          </View>
+          <CardTvShowItem data={item} key={item.id} />
         )}
-      /> */}
+        showsHorizontalScrollIndicator={false}
+      />
+
+      <Footer>
+        <AmountOfTvShows>{tvShows.length} series</AmountOfTvShows>
+        <PaginationContent>
+          {currentPage > 1 && (
+            <PaginationButton>
+              <PaginationLabel>Voltar</PaginationLabel>
+            </PaginationButton>
+          )}
+          {hasNext && (
+            <PaginationButton>
+              <PaginationLabel>Avançar</PaginationLabel>
+            </PaginationButton>
+          )}
+        </PaginationContent>
+      </Footer>
     </Container>
   );
 };
+
+export default Dashboard;
