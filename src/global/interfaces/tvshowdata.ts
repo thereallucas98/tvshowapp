@@ -12,3 +12,7 @@ export interface TVShowsDataResponse {
   image: ImageData;
   averageRuntime: number;
 }
+
+export interface TVShowSearchDataResponse {
+  show: TVShowsDataResponse;
+}

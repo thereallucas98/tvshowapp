@@ -1,10 +1,19 @@
+import { useState } from 'react';
 import { Container } from './styles';
 
-function SearchInput() {
+interface SearchInputProps {
+  setSearchInput: (value: string) => void;
+  searchValue: string;
+}
+
+function SearchInput({ searchValue, setSearchInput }: SearchInputProps) {
+
   return (
     <Container
       placeholder='Busque pelo nome da série'
       placeholderTextColor="#FFF"
+      value={searchValue}
+      onChangeText={setSearchInput}
     />
   );
 };
