@@ -61,7 +61,7 @@ function Dashboard() {
     const fetchDataBySearchValue = async () => {
       const value = searchValue.toLocaleLowerCase();
 
-      const results = await api.get<TVShowSearchDataResponse[]>(`search/shows?q=${value}`);
+      const results = await api.get<TVShowSearchDataResponse[]>(`search/shows?q=${value}&page=${currentPage}`);
 
       if (results.data) {
         const formattedData = results.data.map(item => ({
@@ -75,8 +75,10 @@ function Dashboard() {
         }));
 
         setTvShows(formattedData);
+        setHasNext(false);
       }
     }
+
     if (searchValue === "") {
       fetchData();
     } else {

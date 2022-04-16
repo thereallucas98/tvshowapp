@@ -1,7 +1,8 @@
 import React from 'react';
-import { StatusBar } from 'react-native';
 import AppLoading from 'expo-app-loading';
+import { StatusBar } from 'react-native';
 import { ThemeProvider } from 'styled-components';
+import { NavigationContainer } from '@react-navigation/native';
 
 import {
   useFonts,
@@ -11,7 +12,7 @@ import {
 } from '@expo-google-fonts/roboto';
 
 import theme from './src/global/styles/theme';
-import Dashboard from './src/screens/Dashboard';
+import { AppRoutes } from './src/routes/app.routes';
 
 function App() {
   const [fontsLoaded] = useFonts({
@@ -31,7 +32,9 @@ function App() {
         backgroundColor="transparent"
         translucent
       />
-      <Dashboard />
+      <NavigationContainer>
+        <AppRoutes />
+      </NavigationContainer>
     </ThemeProvider>
   );
 }

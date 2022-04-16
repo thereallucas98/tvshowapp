@@ -16,7 +16,11 @@ function CardTvShowItem({ data }: CardTvShowItemProps) {
         ) : data?.image?.medium ? (
           <ImageBackgroundContent source={{ uri: data?.image?.medium }} resizeMode="cover" />
         ) : (
-          <ImageBackgroundContent source={{ uri: "https://www.google.com/url?sa=i&url=https%3A%2F%2Fcommons.wikimedia.org%2Fwiki%2FFile%3ANo_image_available.svg&psig=AOvVaw00ae7OIZ8Tqy6nQPah8GQS&ust=1650201135801000&source=images&cd=vfe&ved=0CAwQjRxqFwoTCLDQj7rUmPcCFQAAAAAdAAAAABAJ" }} resizeMode="cover" />
+          <ImageBackgroundContent
+            source={{
+              uri: "https://images.unsplash.com/photo-1584905066893-7d5c142ba4e1?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=387&q=80"
+            }} resizeMode="cover"
+          />
         )
       }
       <InfoContent>
