@@ -1,5 +1,6 @@
+import { MaterialIcons } from '@expo/vector-icons';
 import React, { useEffect, useState } from 'react';
-import { FlatList, View, Text, TouchableOpacity } from 'react-native';
+import { FlatList } from 'react-native';
 import CardTvShowItem from '../../components/CardTVShowItem';
 import { Header } from '../../components/Header';
 import SearchInput from '../../components/SearchInput';
@@ -13,6 +14,8 @@ import {
   PaginationContent,
   PaginationButton,
   PaginationLabel,
+  SearchBox,
+  CleanButton,
 } from './styles';
 
 function Dashboard() {
@@ -63,20 +66,18 @@ function Dashboard() {
 
       const results = await api.get<TVShowSearchDataResponse[]>(`search/shows?q=${value}&page=${currentPage}`);
 
-      if (results.data) {
-        const formattedData = results.data.map(item => ({
-          id: item.show.id,
-          url: item.show.url,
-          name: item.show.name,
-          genres: item.show.genres,
-          status: item.show.status,
-          image: item.show.image,
-          averageRuntime: item.show.averageRuntime,
-        }));
+      const formattedData = results.data.map(item => ({
+        id: item.show.id,
+        url: item.show.url,
+        name: item.show.name,
+        genres: item.show.genres,
+        status: item.show.status,
+        image: item.show.image,
+        averageRuntime: item.show.averageRuntime,
+      }));
 
-        setTvShows(formattedData);
-        setHasNext(false);
-      }
+      setTvShows(formattedData);
+      setHasNext(false);
     }
 
     if (searchValue === "") {
@@ -101,10 +102,27 @@ function Dashboard() {
     setCurrentPage(currentPage + 1)
   }
 
+  function handleClearSearchInput() {
+    setCurrentPage(1);
+    setSearchValue("");
+  }
+
   return (
     <Container>
-      <Header />
-      <SearchInput searchValue={searchValue} setSearchInput={setSearchValue} />
+      <Header
+        title="Olá, seja bem-vindo(a), 🤞"
+        subtitle="Aqui você organiza as suas séries da melhor forma"
+      />
+      <SearchBox>
+        <SearchInput
+          searchValue={searchValue}
+          setSearchInput={setSearchValue}
+          placeholderLabel="Busque pelo nome da série"
+        />
+        <CleanButton onPress={handleClearSearchInput}>
+          <MaterialIcons name="clear" size={20} color="#FFF" />
+        </CleanButton>
+      </SearchBox>
 
       {
         tvShows && (

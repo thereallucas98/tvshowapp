@@ -1,5 +1,5 @@
 import React from 'react';
-import { FlatList, View, Text } from 'react-native';
+import { FlatList } from 'react-native';
 import { TVShowsDataResponse } from '../../global/interfaces/tvshowdata';
 import { Container, ImageBackgroundContent, InfoContent, Title, Genre, GenreLabel, Duration } from './styles';
 

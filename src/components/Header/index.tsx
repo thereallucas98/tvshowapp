@@ -1,10 +1,15 @@
 import { Container, Title, SubTitle } from './styles';
 
-function Header() {
+interface HeaderProps {
+  title: string;
+  subtitle: string;
+}
+
+function Header({ title, subtitle }: HeaderProps) {
   return (
     <Container>
-      <Title>Olá, seja bem-vindo(a), 🤞</Title>
-      <SubTitle>Aqui você organiza as suas séries da melhor forma possível.</SubTitle>
+      <Title>{title}</Title>
+      <SubTitle>{subtitle}</SubTitle>
     </Container>
   );
 };

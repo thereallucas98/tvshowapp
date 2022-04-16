@@ -4,13 +4,14 @@ import { Container } from './styles';
 interface SearchInputProps {
   setSearchInput: (value: string) => void;
   searchValue: string;
+  placeholderLabel: string;
 }
 
-function SearchInput({ searchValue, setSearchInput }: SearchInputProps) {
+function SearchInput({ searchValue, setSearchInput, placeholderLabel }: SearchInputProps) {
 
   return (
     <Container
-      placeholder='Busque pelo nome da série'
+      placeholder={placeholderLabel}
       placeholderTextColor="#FFF"
       value={searchValue}
       onChangeText={setSearchInput}

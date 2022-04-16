@@ -7,6 +7,34 @@ const Container = styled.View`
   padding: 32px 8px 0;
 `;
 
+const SearchBox = styled.View`
+  width: 100%;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  margin-top: 32px;
+  margin-bottom: 12px;
+
+  flex-direction: row;
+`;
+
+const CleanButton = styled.TouchableOpacity`
+  width: 58px;
+  height: 58px;
+
+  margin-left: 10px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  border-radius: 8px;
+
+  background-color: ${({ theme }) => theme.colors.attention};
+`;
+
 const Footer = styled.View`
   height: 54px;
   background-color: ${({ theme }) => theme.colors.background_light};
@@ -54,6 +82,8 @@ const PaginationLabel = styled.Text`
 
 export {
   Container,
+  SearchBox,
+  CleanButton,
   Footer,
   AmountOfTvShows,
   PaginationContent,
