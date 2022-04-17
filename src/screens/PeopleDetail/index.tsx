@@ -117,15 +117,17 @@ function PeopleDetail() {
 
             {
               showsByPerson && (
-                <FlatList
-                  horizontal
-                  showsHorizontalScrollIndicator={false}
-                  data={showsByPerson}
-                  keyExtractor={item => String(item.id)}
-                  renderItem={({ item }) => (
-                    <PreviewTvShow data={item} key={item.id} />
-                  )}
-                />
+                <View style={{ flex: 1, height: 400 }}>
+                  <FlatList
+                    horizontal
+                    showsHorizontalScrollIndicator={false}
+                    data={showsByPerson}
+                    keyExtractor={item => String(item.id)}
+                    renderItem={({ item }) => (
+                      <PreviewTvShow data={item} key={item.id} />
+                    )}
+                  />
+                </View>
               )
             }
           </>

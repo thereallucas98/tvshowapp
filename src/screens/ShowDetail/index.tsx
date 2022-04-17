@@ -1,11 +1,14 @@
 import React, { useEffect, useState } from 'react';
 import { useRoute } from '@react-navigation/native';
 import { FlatList } from 'react-native';
+
 import {
   EpisodeData,
   SeasonData,
   TVShowByIndexData
 } from '../../global/interfaces/tvshowdata';
+
+import SeasonItem from '../../components/SeasonItem';
 import api from '../../services/api';
 
 import {
@@ -28,7 +31,7 @@ interface Params {
 
 function ShowDetail() {
   const [show, setShow] = useState<TVShowByIndexData>();
-  const [seasions, setSeasons] = useState<SeasonData[]>([]);
+  const [seasons, setSeasons] = useState<SeasonData[]>([]);
 
   const route = useRoute();
 
@@ -192,6 +195,12 @@ function ShowDetail() {
                 showsHorizontalScrollIndicator={false}
               />
             </FlatListContent>
+
+            {
+              seasons.map(item => (
+                <SeasonItem data={item} key={item.season} />
+              ))
+            }
           </>
         )
       }

@@ -1,3 +1,4 @@
+import { useNavigation } from '@react-navigation/native';
 import { ShowData } from '../../global/interfaces/peopledata';
 
 import { Container, ImageBackgroundContent, Name } from './styles';
@@ -7,8 +8,15 @@ interface PreviewTvShowProps {
 }
 
 function PreviewTvShow({ data }: PreviewTvShowProps) {
+  const navigation = useNavigation();
+
+  function handleNavigateToDetail(id: number) {
+    // Problemas com Versão do React Navigation V6 com React Navitve V63 ou superior
+    navigation.navigate('Show' as never, { id } as never);
+  }
+
   return (
-    <Container>
+    <Container onPress={() => handleNavigateToDetail(data.id)}>
       {
         data?.image?.original ? (
           <ImageBackgroundContent source={{ uri: data?.image?.original }} resizeMode="cover" />
