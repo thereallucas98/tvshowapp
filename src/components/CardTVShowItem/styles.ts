@@ -1,7 +1,7 @@
 import styled from "styled-components/native";
 import { RFValue } from "react-native-responsive-fontsize";
 
-const Container = styled.View`
+const Container = styled.TouchableOpacity`
   height: 300px;
   background-color: ${({ theme }) => theme.colors.background_light};
 

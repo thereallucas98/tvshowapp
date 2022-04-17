@@ -2,12 +2,14 @@ import { RFValue } from "react-native-responsive-fontsize";
 import styled from "styled-components/native";
 
 const Container = styled.TouchableOpacity`
-  height: 150px;
-  width: 200px;
+  height: 200px;
+  width: 150px;
 
   display: flex;
   align-items: center;
   justify-content: center;
+
+  margin-right: 5px;
 `;
 
 const ImageBackgroundContent = styled.Image`

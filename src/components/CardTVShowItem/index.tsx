@@ -1,5 +1,6 @@
 import React from 'react';
 import { FlatList } from 'react-native';
+import { useNavigation } from '@react-navigation/core';
 import { TVShowsDataResponse } from '../../global/interfaces/tvshowdata';
 import { Container, ImageBackgroundContent, InfoContent, Title, Genre, GenreLabel, Duration } from './styles';
 
@@ -8,8 +9,14 @@ interface CardTvShowItemProps {
 }
 
 function CardTvShowItem({ data }: CardTvShowItemProps) {
+  const navigation = useNavigation();
+
+  function handleNavigateToDetail(id: number) {
+    // Problemas com Versão do React Navigation V6 com React Navitve V63 ou superior
+    navigation.navigate('Show' as never, { id } as never);
+  }
   return (
-    <Container>
+    <Container onPress={() => handleNavigateToDetail(data.id)}>
       {
         data?.image?.original ? (
           <ImageBackgroundContent source={{ uri: data?.image?.original }} resizeMode="cover" />

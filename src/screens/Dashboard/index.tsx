@@ -95,7 +95,6 @@ function Dashboard() {
     } else {
       setCurrentPage(1);
     }
-
   }
 
   function handleSetNextPage() {
