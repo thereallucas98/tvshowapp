@@ -1,5 +1,4 @@
 import { useNavigation } from '@react-navigation/core';
-import { StackNavigationProp } from '@react-navigation/stack';
 
 import { PeopleDataResponse } from '../../global/interfaces/peopledata';
 import {

@@ -12,3 +12,27 @@ export interface PeopleDataResponse {
 export interface TVShowSearchDataResponse {
   person: PeopleDataResponse;
 }
+
+export interface CountryData {
+  name: string;
+  code: string;
+}
+
+export interface TVPeopleIndexDataResponse extends PeopleDataResponse {
+  country: CountryData;
+}
+
+export interface ShowData {
+  id: number;
+  url: string;
+  name: string;
+  image: ImageData;
+}
+
+export interface EmbeddedData {
+  show: ShowData;
+}
+
+export interface ShowsByPeopleIndex {
+  _embedded: EmbeddedData;
+}
