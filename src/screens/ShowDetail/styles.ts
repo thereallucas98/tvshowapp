@@ -46,6 +46,20 @@ const InfoDescription = styled.Text`
   color: #ffff;
 `;
 
+const FavoriteButton = styled.TouchableOpacity`
+  display: flex;
+  align-items: center;
+  /* justify-content: center; */
+  flex-direction: row;
+`;
+
+const FavoriteText = styled.Text`
+  font-size: ${RFValue(12)}px;
+  color: ${({ theme }) => theme.colors.shape};
+
+  margin-left: 8px;
+`;
+
 const FlatListContent = styled.View`
   padding: 16px;
 `;
@@ -78,6 +92,8 @@ export {
   InfoGroup,
   InfoLabel,
   InfoDescription,
+  FavoriteButton,
+  FavoriteText,
   FlatListContent,
   Genre,
   GenreLabel,

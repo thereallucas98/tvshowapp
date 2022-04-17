@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useRoute } from '@react-navigation/native';
-import { FlatList } from 'react-native';
+import { MaterialIcons } from '@expo/vector-icons';
+import { FlatList, Text } from 'react-native';
 
 import {
   EpisodeData,
@@ -10,6 +11,8 @@ import {
 
 import SeasonItem from '../../components/SeasonItem';
 import api from '../../services/api';
+
+import { useFavoriteTvShows } from '../../store/useFavoriteShows';
 
 import {
   Container,
@@ -21,7 +24,9 @@ import {
   InfoDescription,
   FlatListContent,
   Genre,
-  GenreLabel
+  GenreLabel,
+  FavoriteButton,
+  FavoriteText
 } from './styles';
 
 interface Params {
@@ -30,8 +35,11 @@ interface Params {
 
 
 function ShowDetail() {
+  const [isMyFavorite, setIsMyFavorite] = useState(false);
   const [show, setShow] = useState<TVShowByIndexData>();
   const [seasons, setSeasons] = useState<SeasonData[]>([]);
+
+  const { favorites, favoriteTvShow } = useFavoriteTvShows();
 
   const route = useRoute();
 
@@ -55,6 +63,11 @@ function ShowDetail() {
       }
 
       setShow(formattedData);
+
+      if (favorites) {
+        const isFavorited = favorites.find(item => item.id === formattedData.id);
+        setIsMyFavorite(!!isFavorited);
+      }
     }
 
     const fetchSeasonsData = async () => {
@@ -108,10 +121,15 @@ function ShowDetail() {
     fetchSeasonsData();
   }, [])
 
+  function handleToFavorite(data: TVShowByIndexData) {
+    favoriteTvShow(data);
+    setIsMyFavorite(!isMyFavorite);
+  }
+
   return (
     <Container>
       {
-        show && (
+        show && seasons && (
           <>
             {
               show?.image.original ? (
@@ -146,6 +164,20 @@ function ShowDetail() {
               <InfoLabel>Resumo</InfoLabel>
               <InfoDescription>{show.summary.replace(/<\/?[^>]+(>|$)/g, "")}</InfoDescription>
             </InfoGroup>
+
+            {
+              isMyFavorite ? (
+                <FavoriteButton onPress={() => handleToFavorite(show)}>
+                  <MaterialIcons name="favorite" size={32} color="#A370F7" />
+                  <FavoriteText>Retirar da Lista de Favoritos</FavoriteText>
+                </FavoriteButton>
+              ) : (
+                <FavoriteButton onPress={() => handleToFavorite(show)}>
+                  <MaterialIcons name="favorite-border" size={32} color="#A370F7" />
+                  <FavoriteText>Adiconar à Lista de Favoritos</FavoriteText>
+                </FavoriteButton>
+              )
+            }
 
             <Main>
               <InfoContent>
