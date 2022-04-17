@@ -2,12 +2,12 @@ import { Text } from 'react-native';
 
 import { Container } from './styles';
 
-function Favorite() {
+function PeopleDetail() {
   return (
     <Container>
-      <Text>Favorite</Text>
+      <Text>PeopleDetail</Text>
     </Container>
   );
 };
 
-export { Favorite };
+export default PeopleDetail;

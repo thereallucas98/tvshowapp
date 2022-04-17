@@ -17,16 +17,23 @@ const ImageBackgroundContent = styled.Image`
   border-radius: 4px;
 `;
 
-const InfoContent = styled.View`
+const Main = styled.View`
   display: flex;
   align-items: center;
   justify-content: space-between;
   flex-direction: row;
+`;
+
+const InfoContent = styled.View`
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
   padding: 6px;
 `;
 
 const InfoGroup = styled.View`
-  /* height: 50px; */
+  width: 100%;
+  display: flex;
   padding: 10px;
 `;
 
@@ -40,11 +47,34 @@ const InfoDescription = styled.Text`
   color: #ffff;
 `;
 
+const GoToDetail = styled.TouchableOpacity`
+  width: 100%;
+  height: 50px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  padding: 10px;
+
+  border-radius: 4px;
+
+  background-color: ${({ theme }) => theme.colors.success};
+`;
+
+const GoToDetailText = styled.Text`
+  font-size: ${RFValue(14)}px;
+  color: #ffff;
+`;
+
 export {
   Container,
   ImageBackgroundContent,
+  Main,
   InfoContent,
   InfoGroup,
   InfoLabel,
   InfoDescription,
+  GoToDetail,
+  GoToDetailText,
 };

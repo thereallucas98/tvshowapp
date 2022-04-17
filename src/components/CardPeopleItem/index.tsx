@@ -1,12 +1,32 @@
-import { PeopleDataResponse } from '../../global/interfaces/peopledata';
+import { useNavigation } from '@react-navigation/core';
+import { StackNavigationProp } from '@react-navigation/stack';
 
-import { Container, ImageBackgroundContent, InfoContent, InfoDescription, InfoGroup, InfoLabel } from './styles';
+import { PeopleDataResponse } from '../../global/interfaces/peopledata';
+import {
+  Container,
+  ImageBackgroundContent,
+  InfoContent,
+  InfoDescription,
+  InfoGroup,
+  InfoLabel,
+  GoToDetail,
+  GoToDetailText,
+  Main
+} from './styles';
 
 interface CardPeopleItemProps {
   data: PeopleDataResponse;
 }
 
 function CardPeopleItem({ data }: CardPeopleItemProps) {
+  const navigation = useNavigation();
+
+  function handlePlantSelect(id: number) {
+    // Problemas com Versão do React Navigation V6 com React Navitve V63 ou superior
+    navigation.navigate('Person' as never, { id } as never);
+  }
+
+
   return (
     <Container>
       {
@@ -23,26 +43,34 @@ function CardPeopleItem({ data }: CardPeopleItemProps) {
         )
       }
 
-      <InfoContent>
-        <InfoGroup>
-          <InfoLabel>Nome</InfoLabel>
-          <InfoDescription>{data.name ? data.name : "Unkown"}</InfoDescription>
-        </InfoGroup>
-        <InfoGroup>
-          <InfoLabel>Data de Nascimento</InfoLabel>
-          <InfoDescription>
-            {data.birthday ?
-              new Date(data.birthday).toLocaleDateString()
-              : "Unkown"}
-          </InfoDescription>
-        </InfoGroup>
-      </InfoContent>
-      <InfoContent>
-        <InfoGroup>
-          <InfoLabel>Gênero</InfoLabel>
-          <InfoDescription>{data.gender ? data.gender : "Unkown"}</InfoDescription>
-        </InfoGroup>
-      </InfoContent>
+      <Main>
+        <InfoContent>
+          <InfoGroup>
+            <InfoLabel>Nome</InfoLabel>
+            <InfoDescription>{data.name ? data.name : "Unkown"}</InfoDescription>
+          </InfoGroup>
+          <InfoGroup>
+            <InfoLabel>Data de Nascimento</InfoLabel>
+            <InfoDescription>
+              {data.birthday ?
+                new Date(data.birthday).toLocaleDateString()
+                : "Unkown"}
+            </InfoDescription>
+          </InfoGroup>
+        </InfoContent>
+
+        <InfoContent>
+          <InfoGroup>
+            <InfoLabel>Gênero</InfoLabel>
+            <InfoDescription>{data.gender ? data.gender : "Unkown"}</InfoDescription>
+          </InfoGroup>
+          <InfoGroup>
+            <GoToDetail onPress={() => handlePlantSelect(data.id)}>
+              <GoToDetailText>Ver Detalhes</GoToDetailText>
+            </GoToDetail>
+          </InfoGroup>
+        </InfoContent>
+      </Main>
     </Container>
   );
 };

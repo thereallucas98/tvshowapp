@@ -1,14 +1,16 @@
 import { Platform } from 'react-native';
 import { MaterialIcons } from '@expo/vector-icons';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
+
 import theme from '../global/styles/theme';
-import Dashboard from '../screens/Dashboard';
-import People from '../screens/People';
-import Favorite from '../screens/Favorite';
+
+import { Dashboard } from '../screens/Dashboard';
+import { People } from '../screens/People';
+import { Favorite } from '../screens/Favorite';
 
 const { Navigator, Screen } = createBottomTabNavigator();
 
-export function AppRoutes() {
+const TabRoutes = () => {
   return (
     <Navigator
       screenOptions={{
@@ -25,7 +27,7 @@ export function AppRoutes() {
       }}
     >
       <Screen
-        name="Series"
+        name="TV Series"
         component={Dashboard}
         options={{
           tabBarIcon: (({ size, color }) =>
@@ -66,3 +68,5 @@ export function AppRoutes() {
     </Navigator>
   );
 }
+
+export default TabRoutes;
