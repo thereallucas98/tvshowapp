@@ -1,3 +1,4 @@
+import { useNavigation } from '@react-navigation/native';
 import { Text } from 'react-native';
 import { EpisodeData } from '../../global/interfaces/tvshowdata';
 
@@ -13,6 +14,13 @@ interface EpisodeItemProps {
 }
 
 function EpisodeItem({ data }: EpisodeItemProps) {
+  const navigation = useNavigation();
+
+  function handleNavigateToDetail(id: number) {
+    // Problemas com Versão do React Navigation V6 com React Navitve V63 ou superior
+    navigation.navigate('Episode' as never, { id } as never);
+  }
+
   return (
     <Container>
       {/* {
@@ -29,7 +37,7 @@ function EpisodeItem({ data }: EpisodeItemProps) {
         )
       } */}
       <LabelEpisode>{data.number} - {data.name}</LabelEpisode>
-      <GoToDetailEpisodeButton>
+      <GoToDetailEpisodeButton onPress={() => handleNavigateToDetail(data.id)}>
         <GoToDetailEpisodeText>Ver Mais!</GoToDetailEpisodeText>
       </GoToDetailEpisodeButton>
     </Container>
