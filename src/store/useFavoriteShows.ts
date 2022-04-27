@@ -13,15 +13,10 @@ export const useFavoriteTvShows = create<State>(
       ({
         favorites: [],
         favoriteTvShow: (data: TVShowByIndexData) => {
-          console.log("16", data);
-
           const favorites = get().favorites;
           const index = favorites?.findIndex((item) => item.id === data.id);
-
-          console.log("21", index);
-
-          if (index !== 1) {
-            if (favorites) {
+          if (index === -1) {
+            if (favorites && favorites.length > 0) {
               useFavoriteTvShows.setState({ favorites: [...favorites, data] });
             } else {
               useFavoriteTvShows.setState({ favorites: [data] });
