@@ -1,4 +1,5 @@
 import React from 'react';
+import { Provider } from "react-redux";
 import AppLoading from 'expo-app-loading';
 import { StatusBar } from 'react-native';
 import { ThemeProvider } from 'styled-components';
@@ -12,6 +13,7 @@ import {
 
 import theme from './src/global/styles/theme';
 import StackRoutes from './src/routes/stack.routes';
+import store from './src/store';
 
 function App() {
   const [fontsLoaded] = useFonts({
@@ -25,7 +27,8 @@ function App() {
   }
 
   return (
-    <ThemeProvider theme={theme}>
+   <Provider store={store}>
+      <ThemeProvider theme={theme}>
       <StatusBar
         barStyle="light-content"
         backgroundColor="transparent"
@@ -33,6 +36,7 @@ function App() {
       />
       <StackRoutes />
     </ThemeProvider>
+   </Provider>
   );
 }
 

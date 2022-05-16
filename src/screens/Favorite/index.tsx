@@ -1,10 +1,13 @@
-import { FlatList, Text } from 'react-native';
+import { FlatList } from 'react-native';
+import { useStore } from 'react-redux';
 import CardTvShowItem from '../../components/CardTVShowItem';
 import { Header } from '../../components/Header';
 import { useFavoriteTvShows } from '../../store/useFavoriteShows';
 import { Container, EmojiIcon, HasNoFavoritesShow, TextDescription, Title } from './styles';
 
 function Favorite() {
+  const store = useStore();
+
   const { favorites, favoriteTvShow } = useFavoriteTvShows();
 
   return (
