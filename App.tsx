@@ -27,16 +27,16 @@ function App() {
   }
 
   return (
-   <Provider store={store}>
-      <ThemeProvider theme={theme}>
-      <StatusBar
-        barStyle="light-content"
-        backgroundColor="transparent"
-        translucent
-      />
-      <StackRoutes />
+    <ThemeProvider theme={theme}>
+      <Provider store={store}>
+        <StatusBar
+          barStyle="light-content"
+          backgroundColor="transparent"
+          translucent
+        />
+        <StackRoutes />
+      </Provider>
     </ThemeProvider>
-   </Provider>
   );
 }
 

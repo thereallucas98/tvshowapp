@@ -1,8 +1,11 @@
 import { createStore } from "redux";
-import tvShows from "./modules/shows/reducer";
+import rootReducer from "./modules/rootReducer";
+import { ITvShowState } from "./modules/shows/reducer";
 
-const store = createStore(() => ({
-  tvShows,
-}));
+export interface IState {
+  tvShows: ITvShowState;
+}
+
+const store = createStore(rootReducer);
 
 export default store;
