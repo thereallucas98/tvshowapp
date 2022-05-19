@@ -16,7 +16,10 @@ export const tvShowSlice = createSlice({
       );
 
       if (hasTvShowAlreadyFavorited === -1) {
-        state.items.push(tvShow);
+        state.items = [
+          ...state.items,
+          tvShow,
+        ];
       }
     },
 
@@ -25,7 +28,7 @@ export const tvShowSlice = createSlice({
         (item) => item.id === action.payload
       );
 
-      if (hasTvShowAlreadyFavorited === 0) {
+      if (hasTvShowAlreadyFavorited !== -1) {
         const updatedItems = state.items.filter(
           (item) => item.id !== action.payload
         );

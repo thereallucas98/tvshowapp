@@ -1,13 +1,15 @@
 import { FlatList } from 'react-native';
-import { TVShowByIndexData } from '../../global/interfaces/tvshowdata';
+// import { TVShowByIndexData } from '../../global/interfaces/tvshowdata';
 import CardTvShowItem from '../../components/CardTVShowItem';
 import { Header } from '../../components/Header';
-import { useSelector } from 'react-redux';
-import { RootState } from "../../redux/store";
+// import { useSelector } from 'react-redux';
+// import { RootState } from "../../redux/store";
 import { Container, EmojiIcon, HasNoFavoritesShow, TextDescription } from './styles';
+import { tvShowStore } from '../../mobx/tvShows';
+import { observer } from 'mobx-react';
 
 function Favorite() {
-  const tvShowsFavorites = useSelector<RootState, TVShowByIndexData[]>(state => state.tvShow.items);
+  // const tvShowsFavorites = useSelector<RootState, TVShowByIndexData[]>(state => state.tvShow.items);
   return (
     <Container>
       <Header
@@ -15,9 +17,9 @@ function Favorite() {
         subtitle='Aqui você terá as suas séries favoritas'
       />
 
-      {tvShowsFavorites && tvShowsFavorites.length > 0 ? (
+      {tvShowStore.getFavoriteTvShows() && tvShowStore.getFavoriteTvShows().length > 0 ? (
         <FlatList
-          data={tvShowsFavorites}
+          data={tvShowStore.getFavoriteTvShows()}
           keyExtractor={item => String(item.id)}
           renderItem={({ item }) => (
             <CardTvShowItem data={item} key={item.id} />
@@ -33,4 +35,4 @@ function Favorite() {
   );
 };
 
-export { Favorite };
+export default observer(Favorite);

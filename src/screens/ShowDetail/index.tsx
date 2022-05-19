@@ -29,9 +29,11 @@ import {
 } from './styles';
 
 // import { addTvShowToFavorite, removeTvShowFromFavorite } from '../../store/modules/shows/actions';
-import { addTvShowToFavorite, removeTvShowFromFavorite } from "../../redux/TvShow";
-import { useSelector } from 'react-redux';
-import { RootState } from '../../redux/store';
+// import { addTvShowToFavorite, removeTvShowFromFavorite } from "../../redux/TvShow";
+import { tvShowStore } from "../../mobx/tvShows";
+import { observer } from 'mobx-react';
+// import { useSelector } from 'react-redux';
+// import { RootState } from '../../redux/store';
 
 interface Params {
   id: number;
@@ -44,7 +46,7 @@ function ShowDetail() {
   const [seasons, setSeasons] = useState<SeasonData[]>([]);
 
   // Redux
-  const favorites = useSelector<RootState, TVShowByIndexData[]>(state => state.tvShow.items);
+  const favorites = tvShowStore.getFavoriteTvShows();
 
 
   const route = useRoute();
@@ -130,15 +132,25 @@ function ShowDetail() {
     fetchSeasonsData();
   }, [])
 
+  // const handleToAddFavorite = useCallback((data: TVShowByIndexData) => {
+  //   dispatch(addTvShowToFavorite(data));
+  //   setIsMyFavorite(true);
+  // }, [dispatch])
+
+  // const handleToRemoveFromFavorite = useCallback((data: TVShowByIndexData) => {
+  //   dispatch(removeTvShowFromFavorite(data.id));
+  //   setIsMyFavorite(false);
+  // }, [dispatch])
+
   const handleToAddFavorite = useCallback((data: TVShowByIndexData) => {
-    dispatch(addTvShowToFavorite(data));
+    tvShowStore.addTvShowToFavorite(data);
     setIsMyFavorite(true);
-  }, [dispatch])
+  }, [])
 
   const handleToRemoveFromFavorite = useCallback((data: TVShowByIndexData) => {
-    dispatch(removeTvShowFromFavorite(data.id));
+    tvShowStore.removeTvShowFromFavorite(data.id);
     setIsMyFavorite(false);
-  }, [dispatch])
+  }, [])
 
   return (
     <Container>
@@ -254,4 +266,4 @@ function ShowDetail() {
   );
 };
 
-export default ShowDetail;
+export default observer(ShowDetail);

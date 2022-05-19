@@ -6,7 +6,7 @@ import theme from '../global/styles/theme';
 
 import { Dashboard } from '../screens/Dashboard';
 import { People } from '../screens/People';
-import { Favorite } from '../screens/Favorite';
+import Favorite from '../screens/Favorite';
 
 const { Navigator, Screen } = createBottomTabNavigator();
 
