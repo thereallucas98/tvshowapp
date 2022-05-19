@@ -11,7 +11,7 @@ function Favorite() {
   return (
     <Container>
       <Header
-        title='Your Favorites'
+        title='Meus Favoritos'
         subtitle='Aqui você terá as suas séries favoritas'
       />
 
