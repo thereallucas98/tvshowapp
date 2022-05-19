@@ -1,16 +1,13 @@
 import { FlatList } from 'react-native';
-import { useSelector } from 'react-redux';
-import { useStore } from 'react-redux';
+import { TVShowByIndexData } from '../../global/interfaces/tvshowdata';
 import CardTvShowItem from '../../components/CardTVShowItem';
 import { Header } from '../../components/Header';
-import { TVShowByIndexData } from '../../global/interfaces/tvshowdata';
-import { IState } from '../../store';
-import { useFavoriteTvShows } from '../../store/useFavoriteShows';
+import { useSelector } from 'react-redux';
+import { RootState } from "../../redux/store";
 import { Container, EmojiIcon, HasNoFavoritesShow, TextDescription } from './styles';
 
 function Favorite() {
-  const tvShowsFavorites = useSelector<IState, TVShowByIndexData[]>(state => state.tvShows.items);
-
+  const tvShowsFavorites = useSelector<RootState, TVShowByIndexData[]>(state => state.tvShow.items);
   return (
     <Container>
       <Header

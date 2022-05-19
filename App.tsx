@@ -13,7 +13,7 @@ import {
 
 import theme from './src/global/styles/theme';
 import StackRoutes from './src/routes/stack.routes';
-import store from './src/store';
+import { store } from './src/redux/store';
 
 function App() {
   const [fontsLoaded] = useFonts({

@@ -13,8 +13,6 @@ import {
 import SeasonItem from '../../components/SeasonItem';
 import api from '../../services/api';
 
-import { useFavoriteTvShows } from '../../store/useFavoriteShows';
-
 import {
   Container,
   ImageBackgroundContent,
@@ -30,9 +28,10 @@ import {
   FavoriteText
 } from './styles';
 
-import { addTvShowToFavorite, removeTvShowFromFavorite } from '../../store/modules/shows/actions';
+// import { addTvShowToFavorite, removeTvShowFromFavorite } from '../../store/modules/shows/actions';
+import { addTvShowToFavorite, removeTvShowFromFavorite } from "../../redux/TvShow";
 import { useSelector } from 'react-redux';
-import { IState } from '../../store';
+import { RootState } from '../../redux/store';
 
 interface Params {
   id: number;
@@ -45,7 +44,7 @@ function ShowDetail() {
   const [seasons, setSeasons] = useState<SeasonData[]>([]);
 
   // Redux
-  const favorites = useSelector<IState, TVShowByIndexData[]>(state => state.tvShows.items);
+  const favorites = useSelector<RootState, TVShowByIndexData[]>(state => state.tvShow.items);
 
 
   const route = useRoute();
