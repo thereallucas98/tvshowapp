@@ -1,11 +1,14 @@
-import { MaterialIcons } from '@expo/vector-icons';
-import React, { useEffect, useState } from 'react';
-import { FlatList } from 'react-native';
-import CardTvShowItem from '../../components/CardTVShowItem';
-import { Header } from '../../components/Header';
-import SearchInput from '../../components/SearchInput';
-import { TVShowsDataResponse, TVShowSearchDataResponse } from '../../global/interfaces/tvshowdata';
-import api from '../../services/api';
+import React, { useEffect, useState } from "react";
+import { FlatList } from "react-native";
+import { MaterialIcons } from "@expo/vector-icons";
+
+import CardTvShowItem from "../../components/CardTVShowItem";
+import { EmptyList } from "../../components/EmptyList";
+import { Header } from "../../components/Header";
+import { Loading } from "../../components/Loading";
+import SearchInput from "../../components/SearchInput";
+
+import { useGetTvShowList } from "./hooks/useGetTvShowsQuery";
 
 import {
   Container,
@@ -16,78 +19,31 @@ import {
   PaginationLabel,
   SearchBox,
   CleanButton,
-} from './styles';
+} from "./styles";
 
 function Dashboard() {
   const [currentPage, setCurrentPage] = useState(1);
   const [hasNext, setHasNext] = useState(true);
   const [searchValue, setSearchValue] = useState("");
-  const [tvShows, setTvShows] = useState<TVShowsDataResponse[]>([]);
+
+  const [selectionParams, setSelectionParams] = useState({
+    page: currentPage,
+    serieValue: searchValue,
+  });
+
+  const {
+    tvShows,
+    isLoadingTvShows,
+    tvShowsBySearch,
+    isLoadingTvShowsBySearch,
+  } = useGetTvShowList(selectionParams);
 
   useEffect(() => {
-    setTvShows([]);
-
-    const fetchData = async () => {
-      const results = await api.get<TVShowsDataResponse[]>(`shows?page=${currentPage}`);
-
-      const formattedData = results.data.map(item => ({
-        id: item.id,
-        url: item.url,
-        name: item.name,
-        genres: item.genres,
-        status: item.status,
-        image: item.image,
-        averageRuntime: item.averageRuntime,
-      }))
-
-      setTvShows(formattedData);
-      fetchHasNextData();
-    }
-
-    const fetchHasNextData = async () => {
-      const hasNextResults = await api.get<TVShowsDataResponse[]>(`shows?page=${currentPage + 1}`);
-
-
-      const formattedData = hasNextResults.data.map(item => ({
-        id: item.id,
-        url: item.url,
-        name: item.name,
-        genres: item.genres,
-        status: item.status,
-        image: item.image,
-        averageRuntime: item.averageRuntime,
-      }))
-
-      setHasNext(!!formattedData);
-    }
-
-    const fetchDataBySearchValue = async () => {
-      const value = searchValue.toLocaleLowerCase();
-
-      const results = await api.get<TVShowSearchDataResponse[]>(`search/shows?q=${value}&page=${currentPage}`);
-
-      const formattedData = results.data.map(item => ({
-        id: item.show.id,
-        url: item.show.url,
-        name: item.show.name,
-        genres: item.show.genres,
-        status: item.show.status,
-        image: item.show.image,
-        averageRuntime: item.show.averageRuntime,
-      }));
-
-      setTvShows(formattedData);
-      setHasNext(false);
-    }
-
-    if (searchValue === "") {
-      fetchData();
-    } else {
-      setCurrentPage(1);
-
-      fetchDataBySearchValue();
-    }
-  }, [currentPage, searchValue])
+    setSelectionParams((prevState) => ({
+      ...prevState,
+      serieValue: searchValue,
+    }));
+  }, [searchValue]);
 
   function handleSetPreviousPage() {
     if (currentPage >= 1) {
@@ -98,7 +54,11 @@ function Dashboard() {
   }
 
   function handleSetNextPage() {
-    setCurrentPage(currentPage + 1)
+    setCurrentPage(currentPage + 1);
+
+    if (currentPage + 1 === 259) {
+      setHasNext(false);
+    }
   }
 
   function handleClearSearchInput() {
@@ -123,23 +83,35 @@ function Dashboard() {
         </CleanButton>
       </SearchBox>
 
-      {
-        tvShows && (
-          <FlatList
-            data={tvShows}
-            keyExtractor={item => String(item.id)}
-            renderItem={({ item }) => (
-              <CardTvShowItem data={item} key={item.id} />
-            )}
-            showsVerticalScrollIndicator={false}
-            maxToRenderPerBatch={10}
-            updateCellsBatchingPeriod={50}
-          />
-        )
-      }
+      {(isLoadingTvShows || isLoadingTvShowsBySearch) &&
+      (!tvShows || !tvShowsBySearch) ? (
+        <Loading />
+      ) : (
+        <FlatList
+          data={searchValue.length > 0 ? tvShowsBySearch : tvShows}
+          keyExtractor={(item) => String(item.id)}
+          renderItem={({ item }) => (
+            <CardTvShowItem data={item} key={item.id} />
+          )}
+          showsVerticalScrollIndicator={false}
+          maxToRenderPerBatch={10}
+          updateCellsBatchingPeriod={50}
+          contentContainerStyle={
+            (tvShows?.length === 0 || tvShowsBySearch?.length === 0) && {
+              flex: 1,
+            }
+          }
+          ListEmptyComponent={() => (
+            <EmptyList message="Não encontramos séries" />
+          )}
+        />
+      )}
 
       <Footer>
-        <AmountOfTvShows>{tvShows.length} series</AmountOfTvShows>
+        <AmountOfTvShows>
+          {searchValue.length > 0 ? tvShowsBySearch?.length : tvShows?.length}{" "}
+          series
+        </AmountOfTvShows>
         <PaginationContent>
           {currentPage > 1 && (
             <PaginationButton onPress={handleSetPreviousPage}>
@@ -155,6 +127,6 @@ function Dashboard() {
       </Footer>
     </Container>
   );
-};
+}
 
 export { Dashboard };
